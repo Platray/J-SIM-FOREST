@@ -1,6 +1,6 @@
 package enums;
 
-public enum GameSpeed {
+public enum SimSpeed {
 
     VERYSLOW(800, "V. Slow"),
     SLOW(400, "Slow"),
@@ -11,7 +11,7 @@ public enum GameSpeed {
     private int speed; // milliseconds
     private String speedLabel;
 
-    GameSpeed(int speed, String label) {
+    SimSpeed(int speed, String label) {
         this.speed = speed;
         this.speedLabel = label;
     }

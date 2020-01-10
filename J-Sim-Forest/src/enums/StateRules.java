@@ -3,7 +3,7 @@ package enums;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Rules {
+public enum StateRules {
  
 	FOREST("forest", new int[] {0,1,2,3}),
 	FIRE("fire", new int[] {0,1,2,3,4,5}),
@@ -15,7 +15,7 @@ public enum Rules {
 	
 	
 
-	 Rules(String label, int[] state) {
+	 StateRules(String label, int[] state) {
 	        this.label = label;
 	        this.state = state;
 	        
@@ -26,7 +26,7 @@ public enum Rules {
 
 	    public static List<String> getRuleSetLabels() {
 	        List<String> allLabels = new ArrayList<>();
-	        for (Rules ruleSet : Rules.values()) {
+	        for (StateRules ruleSet : StateRules.values()) {
 	            allLabels.add(ruleSet.getLabel());
 	        }
 	        return allLabels;
