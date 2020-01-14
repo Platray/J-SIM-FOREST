@@ -6,10 +6,12 @@ import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
+import models.GridForestEntity;
 
 public class SimulationEntity {
 	
 	private GridForestEntity grid;
+	private GridForestEntity gridNext;
 	private Timeline timeline;
 	private ObjectProperty<SimSpeed> gameSpeed; //Vitesse de simulation
     private ObjectProperty<StateRules> ruleSet;//jeu de règle 
@@ -17,14 +19,37 @@ public class SimulationEntity {
     private BooleanProperty needsRedraw; //reset ? 
     private LongProperty generation; //informe sur l'avancé de la simulation 
     private int gridSize;
-    
+    private int cellsize;
     
     
     //Ici il faut mettre les listeners 
     //Les initialize , getneighborsCount, getNeighborsState,play, pause, clear, setNetGeneration
     
+    public SimulationEntity(int gridsize , int cellsize) {
+    	this.gridSize = gridsize;
+    	this.cellsize = cellsize;
+    	this.grid = new GridForestEntity(gridsize);
+    	this.gridNext = new GridForestEntity(gridsize);
+    	
+    	
+    }
     
-    
+	public GridForestEntity getGridNext() {
+		return gridNext;
+	}
+
+	public void setGridNext(GridForestEntity gridNext) {
+		this.gridNext = gridNext;
+	}
+
+	public int getCellsize() {
+		return cellsize;
+	}
+
+	public void setCellsize(int cellsize) {
+		this.cellsize = cellsize;
+	}
+
 	public GridForestEntity getGrid() {
 		return grid;
 	}

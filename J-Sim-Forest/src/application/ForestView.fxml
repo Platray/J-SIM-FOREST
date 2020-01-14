@@ -22,17 +22,6 @@
                 <Label fx:id="gameSpeedLabelValue" text="V. Slow"/>
             </HBox>
         </VBox>
-        <VBox alignment="CENTER" prefWidth="110">
-            <HBox>
-                <Label text="State: "/>
-                <Label fx:id="gameStateLabelValue" text="Paused"/>
-            </HBox>
-        </VBox>
-        <VBox alignment="CENTER" prefWidth="150">
-            <HBox>
-                <Label text="Rule Set: "/>
-                <Label fx:id="ruleSetLabelValue" text="Standard"/>
-            </HBox>
-        </VBox>
+       
     </HBox>
 </VBox>
