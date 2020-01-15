@@ -16,8 +16,7 @@ import models.SimulationEntity;
 public class GridForestController implements Initializable {
 
 	private SimulationEntity simulation;
-	private int gridsize;
-	private boolean previous;
+	
 
 	@FXML
 	private GridPane gridPane;
@@ -32,10 +31,15 @@ public class GridForestController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		
+		initializeGridpane();
 
+		
 	}
 
-	private void initialzeGridpane() {
+	//initialisation de l'objet Gridpane
+	
+	private void initializeGridpane() {
 		int gridsize = this.simulation.getGridSize();
 		int cellsize = this.simulation.getCellsize();
 
@@ -63,6 +67,7 @@ public class GridForestController implements Initializable {
 		cellRect.setStrokeType(StrokeType.INSIDE);
 		cellRect.setStrokeWidth(0.5);
 		cellRect.setSmooth(true);
+        gridPane.add(cellRect, col, row);
 
 	};
 

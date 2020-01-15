@@ -10,18 +10,8 @@
     <GridPane fx:id="gridPane" prefWidth="600.0" prefHeight="600.0"/>
     <!--Grid Info-->
     <HBox prefWidth="600.0" prefHeight="25.0" alignment="CENTER">
-        <VBox alignment="CENTER" prefWidth="125">
-            <HBox>
-                <Label text="Generation: "/>
-                <Label fx:id="generationLabelValue" text="0"/>
-            </HBox>
-        </VBox>
-        <VBox alignment="CENTER" prefWidth="110">
-            <HBox>
-                <Label text="Speed: "/>
-                <Label fx:id="gameSpeedLabelValue" text="V. Slow"/>
-            </HBox>
-        </VBox>
+      
+        
        
     </HBox>
 </VBox>
