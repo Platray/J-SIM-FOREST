@@ -1,9 +1,12 @@
 package models;
 
+import enums.StateRules;
+
 public class CellEntity {
 	private int state;
 	private long age;
-
+	private StateRules stateRule;
+	
 	public CellEntity(int state, long age) {
 		this.state = state;
 		this.age = age;
@@ -15,7 +18,7 @@ public class CellEntity {
 			this.age = 0;
 		}
 	
-//constructeur de copie on lui passe une cellule en paramètre
+//constructeur de copie on lui passe tune cellule en paramètre
 	public CellEntity(CellEntity toCopy) {
 		this.state = toCopy.state;
 		this.age = toCopy.age;
