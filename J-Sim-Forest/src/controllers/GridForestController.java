@@ -37,7 +37,7 @@ public class GridForestController implements Initializable {
 		// grille
 		initializeGridpane();
 
-		simulation.getGeneration().addListener(arg0);
+		//simulation.getGeneration().addListener();
 
 	}
 
@@ -97,16 +97,17 @@ public class GridForestController implements Initializable {
 	}
 
 	// LES LISTENERS :
-	private ChangeListener<Boolean>needRefreshChangeListener(){
+	//private ChangeListener<Boolean>needsRefreshChangeListener(){
 		
-	}
+	//}   
 	
 	
-	private InvalidationListener generationInvalidationListener() {
-		return e -> {
-			generationLabelValue.setText(Long.toString(simulation.getGeneration()));
-			updateGridRectangles();
-		};
-	}
+	
+	//private InvalidationListener generationInvalidationListener() {
+		//return e -> {
+			//generationLabelValue.setText(Long.toString(simulation.getGeneration()));
+		//	updateGridRectangles();
+		//};
+	//}
 
 }

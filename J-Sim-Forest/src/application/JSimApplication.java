@@ -1,6 +1,7 @@
 package application;
 
 import controllers.GridForestController;
+import controllers.PanelController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -8,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import models.SimulationEntity;
 
 public class JSimApplication extends Application {
@@ -36,9 +38,18 @@ public class JSimApplication extends Application {
 
 		// Ajout du gridlayout au mainpane
 		mainPane.setCenter(gridLayout);
+		
+        FXMLLoader controlLoader = new FXMLLoader(getClass().getResource("ControlPanel.fxml"));
 
+	    // Create and attach an instance of the ControllerGameBoard to the loader.
+        PanelController panelController = new PanelController(simulation);
+        controlLoader.setController(panelController);
+        Parent controlPanelLayout = controlLoader.load();
+        
+        // Add the gridLayout to the main pane.
+        mainPane.setRight(controlPanelLayout);
 		// Creation d'une scene et ajout du main pane.
-		Scene mainScene = new Scene(mainPane, 855, 675);
+		Scene mainScene = new Scene(mainPane, 855, 675,Color.DARKGREEN);
 
 		// mise en place stage.
 		stage.setScene(mainScene);

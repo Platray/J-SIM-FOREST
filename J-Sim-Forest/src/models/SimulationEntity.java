@@ -40,7 +40,7 @@ public class SimulationEntity {
 		this.gameRunning.set(false);
 		this.needsRedraw = new SimpleBooleanProperty();
 		this.needsRedraw.set(false);
-		this.ruleSet.set(StateRules.FOREST);
+		//this.ruleSet.set(StateRules.FOREST);
 		this.gameSpeed = new SimpleObjectProperty<>();
 		this.gameSpeed.set(SimSpeed.VERYSLOW);
 		this.generation = new SimpleLongProperty();
@@ -70,7 +70,23 @@ public class SimulationEntity {
 			timeline.play();
 		}
 	}
+	   public void play() {
+	        gameRunning.set(true);
+	        timeline.play();
+	    }
 
+	    public void pause() {
+	        gameRunning.set(false);
+	        timeline.pause();
+	    }
+
+	    public void clear() {
+	        gameRunning.set(false);
+	        timeline.stop();
+	        grid.clearGrid();
+	        gridNext.clearGrid();
+	        setGeneration(generation);;
+	    }
 	public GridForestEntity getGridNext() {
 		return gridNext;
 	}
