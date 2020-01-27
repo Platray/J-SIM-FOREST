@@ -3,11 +3,12 @@ package enums;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public enum StateRules {
  
-	FOREST("forest", new int[] {0,1,2,3}),
-	FIRE("fire", new int[] {0,1,2,3,4,5}),
-	INSECT("insect", new int[] {0,1,2,3,4});
+	FOREST("Forest", new int[] {0,1,2,3}),
+	FIRE("Fire", new int[] {0,1,2,3,4,5}),
+	INSECT("Insect", new int[] {0,1,2,3,4});
 
 
 	private String label;
@@ -30,6 +31,14 @@ public enum StateRules {
 	            allLabels.add(ruleSet.getLabel());
 	        }
 	        return allLabels;
+	    }
+	    public static StateRules fromString(String text) {
+	        for (StateRules ruleSet : StateRules.values()) {
+	            if (ruleSet.label.equalsIgnoreCase(text)) {
+	                return ruleSet;
+	            }
+	        }
+	        return null;
 	    }
 
 	    public int[]getstate() {

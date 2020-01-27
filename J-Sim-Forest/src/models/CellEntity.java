@@ -1,11 +1,13 @@
 package models;
 
+import enums.CellState;
 import enums.StateRules;
 
 public class CellEntity {
 	private int state;
 	private long age;
 	private StateRules stateRule;
+	private CellState cellstate;
 	
 	public CellEntity(int state, long age) {
 		this.state = state;
@@ -31,7 +33,13 @@ public class CellEntity {
 	public void setState(int state) {
 		this.state = state;
 	}
+public CellState getCellState() {
+	return this.cellstate;
+}
 
+public void setCellState(CellState cellState) {
+	this.cellstate = cellState;
+}
 	public long getAge() {
 		return age;
 	}

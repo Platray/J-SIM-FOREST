@@ -2,23 +2,23 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="625.0" prefWidth="200.0" spacing="8" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="625.0" prefWidth="200.0" spacing="8" style="-fx-background-color: #32a852;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
     <padding><Insets left="25" right="25" /></padding>
     <!--Main-->
-    <Label text="J Forest Simulator" textFill="#228622">
+    <Label text="J Forest Simulator" textFill="WHITE">
       <font>
-         <Font name="Consolas" size="16.0" />
+         <Font name="Bodoni MT Black" size="18.0" />
       </font></Label>
     <ImageView fx:id="patternImageView" fitHeight="180" fitWidth="180">
       <image>
@@ -28,13 +28,21 @@
     <HBox spacing="10">
         <Button fx:id="playButton" prefWidth="56" text="Play" />
         <Button fx:id="pauseButton" prefWidth="56" text="Pause" />
-        <Button fx:id="clearButton" prefWidth="56" text="Clear" />
+        <Button fx:id="clearButton" prefHeight="0.0" prefWidth="49.0" text="Clear" />
     </HBox>
+    
+   <HBox spacing="10">
+      <children>
+          <CheckBox fx:id="checkStepByStep" mnemonicParsing="false"  text="Step by Step" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" />
+         <Button id="previousBtn" fx:id="playButton1" prefWidth="56" text="&lt;&lt;" />
+         <Button id="nextBtn" fx:id="clearButton1" prefHeight="0.0" prefWidth="49.0" text="&gt;&gt;" />
+      </children>
+   </HBox>
     <!--Speed-->
     <Label text="Simulation Speed" />
     <Slider fx:id="speedSlider" prefWidth="190" />
     <!--Rules-->
-    <Label text="Choose mode" />
+    <Label text="Switch mode" />
     <ComboBox fx:id="rulesCombo" prefWidth="190" />
     <!--Patterns-->
     <Label text="Add cells " />
@@ -45,12 +53,7 @@
         <Button fx:id="saveButton" prefWidth="90" text="Save" />
         <Button fx:id="loadButton" prefWidth="90" text="Load" />
     </HBox>
-    <!--Random-->
-    <Label text="Generate Random Grid" />
-    <HBox spacing="10">
-        <Button fx:id="randomButton" prefWidth="85" text="Go" />
-        <TextField fx:id="randomTextField" promptText="Life Chance E.g. 0.1" />
-    </HBox>
+    <HBox spacing="10" />
     <!--Color Options-->
     <HBox spacing="10" />
 </VBox>

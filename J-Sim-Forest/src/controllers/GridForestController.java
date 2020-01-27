@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -70,10 +71,25 @@ public class GridForestController implements Initializable {
 		cellRect.setStrokeType(StrokeType.INSIDE);
 		cellRect.setStrokeWidth(0.5);
 		cellRect.setSmooth(true);
+		
+		cellRect.setOnMouseClicked(this::mouseClickedEvent);
 		gridPane.add(cellRect, col, row);
 
 	};
 
+	private void mouseClickedEvent(MouseEvent e) {
+		//Source de l'évènement
+		Rectangle eventSource = (Rectangle) e.getSource();
+		int eventSourceCol = GridPane.getColumnIndex(eventSource);
+		int eventSourceRow = GridPane.getRowIndex(eventSource);
+		
+		
+
+		
+		
+	}
+	
+	
 	public Color getCellColor(int cellState) {
 		if (cellState == 0) {
 			return Color.web("#FEFEFE");

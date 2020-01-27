@@ -49,8 +49,7 @@ public class JSimApplication extends Application {
         // Add the gridLayout to the main pane.
         mainPane.setRight(controlPanelLayout);
 		// Creation d'une scene et ajout du main pane.
-		Scene mainScene = new Scene(mainPane, 855, 675,Color.DARKGREEN);
-
+		Scene mainScene = new Scene(mainPane, 855, 675);
 		// mise en place stage.
 		stage.setScene(mainScene);
 		stage.setResizable(false);
