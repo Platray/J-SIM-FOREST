@@ -110,6 +110,7 @@ public class GridForestController implements Initializable {
 	}
 		return null;}
 
+	
 	private void updateGridRectangles() {
 		// Mise à jour des nodes
 		for (Node child : gridPane.getChildren()) {
