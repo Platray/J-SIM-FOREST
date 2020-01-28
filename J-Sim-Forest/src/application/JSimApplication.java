@@ -21,7 +21,7 @@ public class JSimApplication extends Application {
 	@Override
 	public void init() {
 		System.out.println(" App Init!");
-		simulation = new SimulationEntity(75, 8);
+		simulation = new SimulationEntity(25, 25);
 	}
 
 	@Override

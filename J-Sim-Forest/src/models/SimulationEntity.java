@@ -25,6 +25,7 @@ public class SimulationEntity {
 	private LongProperty generation; // informe sur l'avancé de la simulation
 	private int gridSize;
 	private int cellsize;
+	private int clickType;
 
 	// Ici il faut mettre les listeners
 	// Les initialize , getneighborsCount, getNeighborsState,play, pause, clear,
@@ -81,6 +82,7 @@ public class SimulationEntity {
 	        gameRunning.set(false);
 	        timeline.pause();
 	    }
+	    
 
 	    public void clear() {
 	        gameRunning.set(false);
@@ -178,5 +180,11 @@ public class SimulationEntity {
 	public void setGridSize(int gridSize) {
 		this.gridSize = gridSize;
 	}
+	 public int getClickType() {
+		    return clickType;
+		  }
 
+		  public void setClickType(int value) {
+		    this.clickType = value;
+		  }
 }

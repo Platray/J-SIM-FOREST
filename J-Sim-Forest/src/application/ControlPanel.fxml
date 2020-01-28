@@ -33,7 +33,7 @@
     
    <HBox spacing="10">
       <children>
-          <CheckBox fx:id="checkStepByStep" mnemonicParsing="false"  text="Step by Step" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" />
+          <CheckBox fx:id="checkStepByStep" mnemonicParsing="false" text="Step by Step" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" />
          <Button id="previousBtn" fx:id="playButton1" prefWidth="56" text="&lt;&lt;" />
          <Button id="nextBtn" fx:id="clearButton1" prefHeight="0.0" prefWidth="49.0" text="&gt;&gt;" />
       </children>
@@ -44,16 +44,20 @@
     <!--Rules-->
     <Label text="Switch mode" />
     <ComboBox fx:id="rulesCombo" prefWidth="190" />
-    <!--Patterns-->
+    
     <Label text="Add cells " />
-    <ComboBox fx:id="patternsCombo" prefWidth="190" />
-    <!--Database-->
-    <Label text="Database" />
+    
+     <CheckBox fx:id="babyClick" mnemonicParsing="false" text="Baby" />
+   <CheckBox fx:id="bushClick" mnemonicParsing="false" text="bush" />
+   <CheckBox fx:id="treeClick" mnemonicParsing="false" text="tree" />
+   <CheckBox fx:id="fireClick"  mnemonicParsing="false" text="fire" />
+    <HBox spacing="10" />
+    <!--Color Options-->
+   
     <HBox spacing="10">
         <Button fx:id="saveButton" prefWidth="90" text="Save" />
         <Button fx:id="loadButton" prefWidth="90" text="Load" />
     </HBox>
-    <HBox spacing="10" />
-    <!--Color Options-->
-    <HBox spacing="10" />
+    
+  
 </VBox>

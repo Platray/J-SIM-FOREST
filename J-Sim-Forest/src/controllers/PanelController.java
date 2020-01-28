@@ -7,9 +7,12 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import enums.CellState;
 import enums.SimSpeed;
 import enums.StateRules;
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -51,6 +54,15 @@ public class PanelController implements Initializable {
 	@FXML
 	private CheckBox checkStepByStep;
 
+	@FXML
+	private CheckBox babyClick;
+	@FXML
+	private CheckBox bushClick;
+	@FXML
+	private CheckBox treeClick;
+	@FXML
+	private CheckBox fireClick;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Action Listener pour Play Clear Pause
@@ -60,11 +72,58 @@ public class PanelController implements Initializable {
 
 		checkStepByStep.setOnAction(e -> activateStepByStep());
 
-		// Set up the rules combo box to be populated by the RuleSet enum.
+		babyClick.setOnAction(setAddCellValue);
+		bushClick.setOnAction(setAddCellValue);
+		treeClick.setOnAction(setAddCellValue);
+		fireClick.setOnAction(setAddCellValue);
+
 		rulesCombo.getItems().setAll(StateRules.getRuleSetLabels());
 		rulesCombo.getSelectionModel().selectFirst();
 		rulesCombo.valueProperty().addListener(getRulesComboChangeListener());
 	}
+
+	EventHandler setAddCellValue = new EventHandler<ActionEvent>() {
+		@Override
+		public void handle(ActionEvent event) {
+
+			if (event.getSource() instanceof CheckBox) {
+				checkBoxUncheck( event);
+				
+			}
+		}
+	};
+
+private void checkBoxUncheck(ActionEvent event) {
+	if (event.getSource() instanceof CheckBox) {
+		CheckBox chk = (CheckBox) event.getSource();
+		if ("Baby".equals(chk.getText())) {
+			bushClick.setSelected(false);
+			treeClick.setSelected(false);
+			fireClick.setSelected(false);
+		    this.simulation.setClickType(CellState.BABY.getValue());
+
+		} else if ("bush".equals(chk.getText())) {
+			babyClick.setSelected(false);
+			treeClick.setSelected(false);
+			fireClick.setSelected(false);
+		    this.simulation.setClickType(CellState.BUSH.getValue());
+
+
+		} else if ("tree".equals(chk.getText())) {
+			bushClick.setSelected(false);
+			babyClick.setSelected(false);
+			fireClick.setSelected(false);
+		    this.simulation.setClickType(CellState.TREE.getValue());
+
+		} else if ("fire".equals(chk.getText())) {
+			bushClick.setSelected(false);
+			babyClick.setSelected(false);
+			treeClick.setSelected(false);
+		    this.simulation.setClickType(CellState.FIRE.getValue());
+
+		}
+	}
+}
 
 	private void playBtnOnAction() {
 		System.out.println("Play button was pressed!");

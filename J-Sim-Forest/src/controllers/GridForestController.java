@@ -3,6 +3,7 @@ package controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import enums.CellState;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -18,6 +19,7 @@ import javafx.beans.value.ChangeListener;
 import models.SimulationEntity;
 
 public class GridForestController implements Initializable {
+	private int clickType;
 
 	private SimulationEntity simulation;
 
@@ -83,24 +85,30 @@ public class GridForestController implements Initializable {
 		int eventSourceCol = GridPane.getColumnIndex(eventSource);
 		int eventSourceRow = GridPane.getRowIndex(eventSource);
 		
+		int state= simulation.getClickType();
+		Color cellColor= getCellColor(state);
+        eventSource.setFill(cellColor);
+		
 		
 
 		
-		
+        
 	}
 	
 	
 	public Color getCellColor(int cellState) {
-		if (cellState == 0) {
+		if (cellState == CellState.EMPTY.getValue()) {
 			return Color.web("#FEFEFE");
-		} else if (cellState == 1) {
-			return Color.web("#DCFF8C");
-		} else if (cellState == 2) {
-			return Color.web("#61FF3A");
-		} else {
-			return Color.web("#229C03");
-		}
+		} else if (cellState == CellState.BABY.getValue()) {
+			return Color.web("#d4ffa6");
+		} else if (cellState == CellState.BUSH.getValue()) {
+			return Color.web("#8bed45");
+		} else if(cellState == CellState.TREE.getValue()) {
+			return Color.web("#02a80a");
+		}else if(cellState == CellState.FIRE.getValue()) {
+			return Color.web("#db6216");
 	}
+		return null;}
 
 	private void updateGridRectangles() {
 		// Mise à jour des nodes
