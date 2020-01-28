@@ -72,25 +72,26 @@ public class SimulationEntity {
 		}
 	}
 	
-	
-	   public void play() {
-	        gameRunning.set(true);
-	        timeline.play();
-	    }
 
-	    public void pause() {
-	        gameRunning.set(false);
-	        timeline.pause();
-	    }
-	    
+	public void play() {
+		gameRunning.set(true);
+		timeline.play();
+	}
 
-	    public void clear() {
-	        gameRunning.set(false);
-	        timeline.stop();
-	        grid.clearGrid();
-	        gridNext.clearGrid();
-	        setGeneration(generation);;
-	    }
+	public void pause() {
+		gameRunning.set(false);
+		timeline.pause();
+	}
+
+	public void clear() {
+		gameRunning.set(false);
+		timeline.stop();
+		grid.clearGrid();
+		gridNext.clearGrid();
+		setGeneration(generation);
+		;
+	}
+
 	public GridForestEntity getGridNext() {
 		return gridNext;
 	}
@@ -103,14 +104,20 @@ public class SimulationEntity {
 		return cellsize;
 	}
 
-	
-	public void getCellState(int i, int j) {
-		
+	public BooleanProperty needsRedrawProperty() {
+		return needsRedraw;
 	}
 
-	
+	public void setNeedsRedraw(boolean needsRedraw) {
+		this.needsRedraw.set(needsRedraw);
+	}
+
+	public void getCellState(int i, int j) {
+
+	}
+
 	public void toggleCellState(int i, int j, boolean current) {
-		
+
 	}
 
 	public void setCellsize(int cellsize) {
@@ -149,14 +156,16 @@ public class SimulationEntity {
 		this.ruleSet.set(ruleSet);
 	}
 
-	public BooleanProperty getGameRunning() {
-		return gameRunning;
-	}
+	 public BooleanProperty gameRunningProperty() {
+	        return gameRunning;
+	    }
 
 	public void setGameRunning(BooleanProperty gameRunning) {
 		this.gameRunning = gameRunning;
 	}
-
+	 public boolean isGameRunning() {
+	        return gameRunning.get();
+	    }
 	public BooleanProperty getNeedsRedraw() {
 		return needsRedraw;
 	}
@@ -180,11 +189,12 @@ public class SimulationEntity {
 	public void setGridSize(int gridSize) {
 		this.gridSize = gridSize;
 	}
-	 public int getClickType() {
-		    return clickType;
-		  }
 
-		  public void setClickType(int value) {
-		    this.clickType = value;
-		  }
+	public int getClickType() {
+		return clickType;
+	}
+
+	public void setClickType(int value) {
+		this.clickType = value;
+	}
 }

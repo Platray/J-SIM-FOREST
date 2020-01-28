@@ -1,5 +1,7 @@
 package models;
 
+import enums.CellState;
+
 public class GridForestEntity {
 
 	private CellEntity[][] grid;
@@ -29,8 +31,7 @@ public class GridForestEntity {
 		for (int i = 0; i < gridSize; i++) {
 			for (int j = 0; j < gridSize; j++) {
 				grid[i][j].setAge(0);
-				;
-				grid[i][j].setState(0);
+				grid[i][j].setCellState(CellState.EMPTY);
 			}
 		}
 	}
