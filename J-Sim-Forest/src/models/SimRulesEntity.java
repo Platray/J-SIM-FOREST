@@ -3,7 +3,7 @@ package models;
 import enums.StateRules;
 import enums.SimSpeed;
 
-public class SimRules {
+public class SimRulesEntity {
 	private StateRules rule;
 	private SimSpeed speed;
 	private int simDuration;

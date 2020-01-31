@@ -47,4 +47,8 @@ public enum StateRules {
 	    public void setState(int[] state) {
 	    	this.state = state;
 	    }
+		public void set(StateRules ruleSet) {
+			// TODO Auto-generated method stub
+			
+		}
 }

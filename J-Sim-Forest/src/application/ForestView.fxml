@@ -6,31 +6,40 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="650.0" prefWidth="600.0" style="-fx-background-color: #32a852;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="650.0" prefWidth="600.0"
+	style="-fx-background-color: #32a852;"
+	xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns:fx="http://javafx.com/fxml/1">
 
 	<!--Grid -->
-	<GridPane fx:id="gridPane" prefHeight="600.0" prefWidth="600.0" />
+	<GridPane fx:id="gridPane" prefHeight="600.0"
+		prefWidth="600.0" />
 	<!--Grid Info -->
-	<HBox alignment="CENTER" prefHeight="25.0" prefWidth="600.0" style="-fx-spacing: 10px;">
-				<TextField prefHeight="25.0" prefWidth="118.0" />
-   				<Label text="width " />
-	<VBox alignment="CENTER" prefWidth="110">
+	<HBox alignment="CENTER" prefHeight="25.0" prefWidth="600.0"
+		style="-fx-spacing: 10px;">
 	
+		<VBox alignment="CENTER" prefWidth="110">
+			<TextField prefHeight="25.0" prefWidth="118.0" fx:id="width" />
+		<Label text="custom width " />
+</VBox>
 			<HBox />
-		</VBox>
+		
+		
 		<VBox alignment="CENTER" prefWidth="110">
 			<HBox>
-				<TextField prefHeight="25.0" prefWidth="118.0" />
+				<TextField prefHeight="25.0" prefWidth="118.0"
+					fx:id="height" />
 			</HBox>
 		</VBox>
-				<Label text="lenght " />
-			</HBox>
 		
-	<HBox alignment="CENTER" prefHeight="25.0" prefWidth="600.0" style="-fx-spacing: 10px;">
+		<Label text=" custom height " />
+	</HBox>
+
+	<HBox alignment="CENTER" prefHeight="25.0" prefWidth="600.0"
+		style="-fx-spacing: 10px;">
 
 
-		
-		
+
 		<VBox alignment="CENTER" prefWidth="125">
 			<HBox>
 				<Label text="Generation: " />

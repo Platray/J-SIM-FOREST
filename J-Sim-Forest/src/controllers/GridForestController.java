@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -15,11 +16,14 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.beans.InvalidationListener;
+import javafx.beans.property.LongProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import models.CellEntity;
 import models.SimulationEntity;
 
 public class GridForestController implements Initializable {
+
 	private int clickType;
 
 	private SimulationEntity simulation;
@@ -35,14 +39,26 @@ public class GridForestController implements Initializable {
 	@FXML
 	private Label ruleSetLabelValue;
 
+	@FXML
+	private TextField width;
+
+	@FXML
+	private TextField height;
+
 	public GridForestController(SimulationEntity simulation) {
 		this.simulation = simulation;
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle ressources) {
+
 		// grille
 		initializeGridpane();
+
+		simulation.gameRunningProperty().addListener(gameRunningListener());
+
+		// generation
+		simulation.generationProperty().addListener(generationInvalidationListener());
 
 		// Trigger le raffraichissement
 		simulation.needsRedrawProperty().addListener(needsRefreshChangeListener());
@@ -53,46 +69,56 @@ public class GridForestController implements Initializable {
 		return new ChangeListener<Boolean>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				simulation.needsRedrawProperty().removeListener(this);
+				
 				updateGridRectangles();
 				simulation.setNeedsRedraw(false);
 				simulation.needsRedrawProperty().addListener(this);
-
 				System.out.println("MISE A JOUR ");
-			}
-
-			private InvalidationListener gameRunningListener() {
-				return e -> {
-					String newLabelString;
-					if (simulation.isGameRunning()) {
-						newLabelString = "Running";
-					} else {
-						newLabelString = "Paused";
-					}
-					gameStateLabelValue.setText(newLabelString);
-
-				};
 			}
 
 		};
 
 	}
 
+	private InvalidationListener generationInvalidationListener() {
+		return e -> {
+			generationLabelValue.setText(simulation.getGeneration().toString());
+			updateGridRectangles();
+		};
+	}
+
+	// Simulation active ?
+	private InvalidationListener gameRunningListener() {
+		return e -> {
+			String newLabelString;
+			if (simulation.isGameRunning()) {
+				newLabelString = "Running";
+			} else {
+				newLabelString = "Paused";
+			}
+			gameStateLabelValue.setText(newLabelString);
+
+		};
+	}
+
 	// initialisation de l'objet Gridpane
 	private void initializeGridpane() {
-
-		int gridsize = this.simulation.getGridSize();
 		int cellsize = this.simulation.getCellsize();
+		int gridLenght = simulation.getGrid().getgridLenght();
+		int gridWidth = simulation.getGrid().getgridWitdh();
 
-		for (int i = 0; i < gridsize; i++) {
+		for (int i = 0; i < gridWidth; i++) {
 			gridPane.getColumnConstraints().add(new ColumnConstraints(cellsize));
 			gridPane.getRowConstraints().add(new RowConstraints(cellsize));
 
 		}
-		for (int i = 0; i < gridsize; i++) {
-			for (int j = 0; j < gridsize; j++) {
+		for (int i = 0; i < gridLenght; i++) {
+			for (int j = 0; j < gridWidth; j++) {
+				CellEntity cell = new CellEntity(i, j);
 				initializeCells(i, j);
+
 			}
 		}
 
@@ -120,11 +146,27 @@ public class GridForestController implements Initializable {
 		int eventSourceCol = GridPane.getColumnIndex(eventSource);
 		int eventSourceRow = GridPane.getRowIndex(eventSource);
 
-		int state = simulation.getClickType();
-		Color cellColor = getCellColor(state);
-		eventSource.setFill(cellColor);
+		this.clickType = simulation.getClickType();
+		CellEntity cell = new CellEntity(eventSourceRow, eventSourceCol);
+		CellState cellState = getCellstatebyInt(this.clickType);
+		cell = simulation.getGrid().getGrid()[eventSourceRow][eventSourceCol];
+		
+		cell.setCellState(cellState);
+		System.out.println("VARIABLE");
 
+		System.out.println(cellState.toString());
+		System.out.println("ASSIGNATION");
+
+		System.out.println(cell.getCellState());
+		System.out.println("CLICKTYPE");
+
+		System.out.println(cell.getCellStateFromInt(clickType));
+
+		simulation.getGrid().getGrid()[eventSourceRow][eventSourceCol] = cell;
+		Color cellColor = getCellColor(this.clickType);
+		eventSource.setFill(cellColor);
 	}
+	
 
 	// Pour récupérer la couleur de cellule
 	public Color getCellColor(int cellState) {
@@ -139,10 +181,26 @@ public class GridForestController implements Initializable {
 		} else if (cellState == CellState.FIRE.getValue()) {
 			return Color.web("#db6216");
 		}
+		return Color.web("#FEFEFE");
+	}
+
+	public CellState getCellstatebyInt(int cellState) {
+		if (cellState == 0) {
+			return CellState.EMPTY;
+		} else if (cellState == 1) {
+			return CellState.BABY;
+		} else if (cellState == 2) {
+			return CellState.BUSH;
+		} else if (cellState == 4) {
+			return CellState.TREE;
+		} else if (cellState == 5) {
+			return CellState.FIRE;
+		}
 		return null;
 	}
 
 	// Mise à jour des cellules
+
 	private void updateGridRectangles() {
 		// Mise à jour des nodes
 		for (Node child : gridPane.getChildren()) {
@@ -150,9 +208,14 @@ public class GridForestController implements Initializable {
 			int row = GridPane.getRowIndex(child);
 			Rectangle cellRect = (Rectangle) child;
 			// on récupère l'état de la cellule
-			CellState cell = simulation.getGrid().getGrid()[row][col].getCellState();
-			Color cellColor = getCellColor(cell.getValue());
+			CellEntity cell =new CellEntity (row,col);
+			 cell = simulation.getGrid().getGrid()[row][col];
+			cell.setCellState(simulation.getGrid().getGrid()[row][col].getCellState());
+			CellState cellstate = cell.getCellState();
+			Color cellColor = getCellColor(cellstate.getValue());
 			cellRect.setFill(cellColor);
+			System.out.println("UPDATE RECTANGLE ");
+
 		}
 	}
 
