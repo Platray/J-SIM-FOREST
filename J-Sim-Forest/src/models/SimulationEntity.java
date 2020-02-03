@@ -1,5 +1,6 @@
 package models;
 
+import controllers.GridForestController;
 import enums.CellState;
 import enums.SimSpeed;
 import enums.StateRules;
@@ -45,8 +46,8 @@ public class SimulationEntity {
 		this.gameRunning.set(false);
 		this.needsRedraw = new SimpleBooleanProperty();
 		this.needsRedraw.set(false);
-		
-		//this.ruleSet.set(StateRules.FOREST);;
+
+		// this.ruleSet.set(StateRules.FOREST);;
 		this.gameSpeed = new SimpleObjectProperty<>();
 		this.gameSpeed.set(SimSpeed.VERYSLOW);
 		this.generation = new SimpleLongProperty();
@@ -64,8 +65,8 @@ public class SimulationEntity {
 		}
 		// Définition de la Timeline avec la longueur d'intervale voulu
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(speed.toValue()), e -> {
-			nextGeneration();
 			generation.set(generation.get() + 1);
+			nextGeneration();
 			setNeedsRedraw(true);
 		});
 
@@ -83,14 +84,11 @@ public class SimulationEntity {
 		// LOGIQUE DE CHANGEMENT DETAT des cellules
 		for (int col = 0; col < grid.getgridLenght(); col++) {
 			for (int row = 0; row < grid.getgridWitdh(); row++) {
-				CellEntity cell = grid.getGrid()[row][col];
-				grid.getGrid()[row][col] = cell;
 				forestGrowth(grid, row, col);
-
 			}
 
 		}
-		
+
 	}
 
 	public void play() {
@@ -113,7 +111,7 @@ public class SimulationEntity {
 	}
 
 	private void setGeneration(int i) {
-generation.setValue(i);
+		this.generation.setValue(i);
 	}
 
 	public GridForestEntity getGridNext() {
@@ -141,13 +139,13 @@ generation.setValue(i);
 		neighbors.getGrid()[0][2] = this.getNeighbor(row + 1, col - 1, gridWidth, gridHeight);
 		neighbors.getGrid()[1][2] = this.getNeighbor(row + 1, col, gridWidth, gridHeight);
 		neighbors.getGrid()[2][2] = this.getNeighbor(row + 1, col + 1, gridWidth, gridHeight);
-		
+
 		return neighbors;
 	}
 
 	// récupère un voisin
 	private CellEntity getNeighbor(int row, int col, int gridWidth, int gridHeight) {
-		CellEntity cell = new CellEntity(row,col);
+		CellEntity cell = new CellEntity(row, col);
 
 		if (row < 0 || row >= gridHeight || col < 0 || col >= gridWidth) {
 			cell = new CellEntity(row, col);
@@ -203,45 +201,56 @@ generation.setValue(i);
 		default:
 			cell.setCellState(CellState.EMPTY);
 		}
+		
 
 	}
 	// Modèle croissance
 
-	private void forestGrowth(GridForestEntity previousGrid, int row, int col) {
-				System.out.println("DANS FOREST GROWTH");
-				CellEntity cell = new CellEntity(previousGrid.getGrid()[row][col]);
+	public void forestGrowth(GridForestEntity previousGrid, int row, int col) {
+		System.out.println("DANS FOREST GROWTH");
+		
+		CellEntity cell = new CellEntity(previousGrid.getGrid()[row][col]);
+		System.out.print("ETAT CELLULE DANS FGROWTH          :"+cell.getCellState().toString());
 
-				GridForestEntity neighbors = getNeighbors( row,  col,  previousGrid.getgridWitdh(),previousGrid.getgridLenght());
-				cell.setNeighbors(neighbors);
+		GridForestEntity neighbors = getNeighbors(row, col, previousGrid.getgridWitdh(), previousGrid.getgridLenght());
+		cell.setNeighbors(neighbors);
 		CellEntity newCell = new CellEntity(gridNext.getGrid()[row][col]);
 		newCell.setCellState(cell.getCellState());
+		
+		
 		if (cell.getCellState() == CellState.EMPTY) {
-			if (((countStates(cell.getNeighbors(), CellState.TREE) >= 2 || countStates(cell.getNeighbors(), CellState.BUSH) >= 3
+			System.out.println("DANS 1er IF ");
+			if (((countStates(cell.getNeighbors(), CellState.TREE) >= 2
+					|| countStates(cell.getNeighbors(), CellState.BUSH) >= 3
 					|| (this.countStates(cell.getNeighbors(), CellState.TREE) == 1
 							&& this.countStates(cell.getNeighbors(), CellState.BUSH) == 2)))) {
-
 				changeState(newCell);
-				cell = newCell;
-
+				grid.setGrid(gridNext.getGrid()); 
 				System.out.println("1 GROWTH");
 
 			}
 		} else if (cell.getCellState() == CellState.BABY) {
-			if ((countStates(cell.getNeighbors(), CellState.TREE) <= 3) || (countStates(cell.getNeighbors(), CellState.BUSH)) <= 3) {
+			System.out.println("DANS 1er Baby ");
+
+			if ((countStates(cell.getNeighbors(), CellState.TREE) <= 3)
+					|| (countStates(cell.getNeighbors(), CellState.BUSH)) <= 3) {
 				changeState(newCell);
+				grid.setGrid(gridNext.getGrid()); 
+
 				System.out.println("3 GROWTH");
 
 			}
 		} else if (cell.getCellState() == CellState.BUSH) {
 			if (cell.getAge() == 0) {
-				newCell.setAge(1);
+				cell.setAge(1);
 				changeState(newCell);
-				cell = newCell;
+				grid.setGrid(gridNext.getGrid()); 
+
+
 			} else {
 				changeState(newCell);
-				cell = newCell;
+				grid.setGrid(gridNext.getGrid()); 
 
-				
 			}
 			System.out.println("2 GROWTH");
 

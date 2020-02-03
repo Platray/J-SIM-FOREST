@@ -34,7 +34,7 @@ public class CellEntity {
 	}
 
 public CellState getCellState() {
-	return this.cellstate;
+	return cellstate;
 }
 
 public void setCellState(CellState cellState) {

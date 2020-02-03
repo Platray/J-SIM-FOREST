@@ -25,7 +25,7 @@ import models.SimulationEntity;
 public class GridForestController implements Initializable {
 
 	private int clickType;
-
+	private int counter = 0;
 	private SimulationEntity simulation;
 
 	@FXML
@@ -71,7 +71,6 @@ public class GridForestController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				simulation.needsRedrawProperty().removeListener(this);
-				
 				updateGridRectangles();
 				simulation.setNeedsRedraw(false);
 				simulation.needsRedrawProperty().addListener(this);
@@ -112,16 +111,14 @@ public class GridForestController implements Initializable {
 		for (int i = 0; i < gridWidth; i++) {
 			gridPane.getColumnConstraints().add(new ColumnConstraints(cellsize));
 			gridPane.getRowConstraints().add(new RowConstraints(cellsize));
-
 		}
 		for (int i = 0; i < gridLenght; i++) {
 			for (int j = 0; j < gridWidth; j++) {
 				CellEntity cell = new CellEntity(i, j);
 				initializeCells(i, j);
-
 			}
 		}
-
+counter++;
 	}
 
 	private void initializeCells(int row, int col) {
@@ -137,7 +134,11 @@ public class GridForestController implements Initializable {
 		// Ajout evènement sur click voir en dessous
 		cellRect.setOnMouseClicked(this::mouseClickedEvent);
 		gridPane.add(cellRect, col, row);
-
+		if (counter == 0) {
+			simulation.setGridNext(simulation.getGrid());
+			simulation.getGrid().getGrid()[row][col].setCellState(CellState.EMPTY);
+		}
+		System.out.println(	 simulation.getGrid().getGrid()[row][col].getCellState().toString());
 	};
 
 	private void mouseClickedEvent(MouseEvent e) {
@@ -150,19 +151,10 @@ public class GridForestController implements Initializable {
 		CellEntity cell = new CellEntity(eventSourceRow, eventSourceCol);
 		CellState cellState = getCellstatebyInt(this.clickType);
 		cell = simulation.getGrid().getGrid()[eventSourceRow][eventSourceCol];
-		
 		cell.setCellState(cellState);
-		System.out.println("VARIABLE");
+		
+		simulation.getGrid().getGrid()[eventSourceRow][eventSourceCol].setCellState(cellState);
 
-		System.out.println(cellState.toString());
-		System.out.println("ASSIGNATION");
-
-		System.out.println(cell.getCellState());
-		System.out.println("CLICKTYPE");
-
-		System.out.println(cell.getCellStateFromInt(clickType));
-
-		simulation.getGrid().getGrid()[eventSourceRow][eventSourceCol] = cell;
 		Color cellColor = getCellColor(this.clickType);
 		eventSource.setFill(cellColor);
 	}
@@ -201,20 +193,17 @@ public class GridForestController implements Initializable {
 
 	// Mise à jour des cellules
 
-	private void updateGridRectangles() {
+	public void updateGridRectangles() {
 		// Mise à jour des nodes
 		for (Node child : gridPane.getChildren()) {
 			int col = GridPane.getColumnIndex(child);
 			int row = GridPane.getRowIndex(child);
 			Rectangle cellRect = (Rectangle) child;
 			// on récupère l'état de la cellule
-			CellEntity cell =new CellEntity (row,col);
-			 cell = simulation.getGrid().getGrid()[row][col];
-			cell.setCellState(simulation.getGrid().getGrid()[row][col].getCellState());
-			CellState cellstate = cell.getCellState();
+			CellState cellstate = simulation.getGridNext().getGrid()[row][col].getCellState();
+			System.out.println(cellstate.toString());
 			Color cellColor = getCellColor(cellstate.getValue());
 			cellRect.setFill(cellColor);
-			System.out.println("UPDATE RECTANGLE ");
 
 		}
 	}

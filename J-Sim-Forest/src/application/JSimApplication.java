@@ -22,7 +22,7 @@ public class JSimApplication extends Application {
 		System.out.println(" App Init!");
 
 		// Initialisation par défaut à 100 sur 100 , taille de cellule à 10
-		simulation = new SimulationEntity(80, 80, 8);
+		simulation = new SimulationEntity(70, 70, 8);
 	};
 
 	@Override
