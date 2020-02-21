@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 
 public class JSimApplication extends Application {
 
-	 @Override
+	  @Override
 	    public void start(Stage stage) {
 	        MainView mainView = new MainView();
 	        Scene scene = new Scene(mainView, 640, 480);

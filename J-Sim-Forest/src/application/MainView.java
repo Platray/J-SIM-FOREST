@@ -3,8 +3,7 @@ package application;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -38,10 +37,8 @@ public class MainView extends VBox {
 
 		try {
 			Point2D simCoord = this.affine.inverseTransform(mouseX, mouseY);
-
 			int simX = (int) simCoord.getX();
 			int simY = (int) simCoord.getY();
-
 			System.out.println(simX + ", " + simY);
 
 			this.simulation.setState(simX, simY, drawMode);
@@ -55,7 +52,7 @@ public class MainView extends VBox {
 		GraphicsContext g = this.canvas.getGraphicsContext2D();
 		g.setTransform(this.affine);
 
-		g.setFill(Color.LIGHTGRAY);
+		g.setFill(Color.BLUE);
 		g.fillRect(0, 0, 450, 450);
 
 		for (int x = 0; x < this.simulation.width; x++) {
