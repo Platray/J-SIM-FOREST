@@ -1,43 +1,54 @@
 package application;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
+import javafx.scene.transform.NonInvertibleTransformException;
 
 public class MainView extends VBox {
 
-	private Button stepButton;
 	private Canvas canvas;
 
 	private Affine affine;
 
 	private Simulation simulation;
+	private int drawMode = Simulation.BABY;
 
 	public MainView() {
-		this.stepButton = new Button("step");
-		this.stepButton.setOnAction(actionEvent -> {
-			simulation.step();
-			draw();
-		});
-
 		this.canvas = new Canvas(400, 400);
+		this.canvas.setOnMousePressed(this::handleDraw);
+		this.canvas.setOnMouseDragged(this::handleDraw);
 
-		this.getChildren().addAll(this.stepButton, this.canvas);
-
+		Toolbar toolbar = new Toolbar(this);
+		this.getChildren().addAll(toolbar, this.canvas);
 		this.affine = new Affine();
 		this.affine.appendScale(400 / 10f, 400 / 10f);
-
 		this.simulation = new Simulation(10, 10);
+	}
 
-		simulation.setAliveShoot(2, 2);
-		simulation.setAliveShrub(3, 2);
-		simulation.setAliveShrubold(4, 2);
+	private void handleDraw(MouseEvent event) {
+		double mouseX = event.getX();
+		double mouseY = event.getY();
 
-		simulation.setAliveShrubold(6, 5);
-		simulation.setAliveTree(6, 6);
+		try {
+			Point2D simCoord = this.affine.inverseTransform(mouseX, mouseY);
+
+			int simX = (int) simCoord.getX();
+			int simY = (int) simCoord.getY();
+
+			System.out.println(simX + ", " + simY);
+
+			this.simulation.setState(simX, simY, drawMode);
+			draw();
+		} catch (NonInvertibleTransformException e) {
+			System.out.println("Could not invert transform");
+		}
 	}
 
 	public void draw() {
@@ -61,7 +72,7 @@ public class MainView extends VBox {
 				} else if (this.simulation.getState(x, y) == 4) {
 					g.setFill(Color.web("#187000"));
 					g.fillRect(x, y, 1, 1);
-				}else {
+				} else {
 					g.setFill(Color.LIGHTGRAY);
 					g.fillRect(x, y, 1, 1);
 				}
@@ -80,4 +91,11 @@ public class MainView extends VBox {
 
 	}
 
+	public Simulation getSimulation() {
+		return this.simulation;
+	}
+
+	public void setDrawMode(int newDrawMode) {
+		this.drawMode = newDrawMode;
+	}
 }

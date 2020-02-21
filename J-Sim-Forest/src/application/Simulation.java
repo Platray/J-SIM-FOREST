@@ -1,6 +1,14 @@
 package application;
 
 public class Simulation {
+
+	public static int DEAD = 0;
+    public static int BABY = 1;
+    public static int BUSH = 2;
+    public static int BUSHOLD = 3;
+    public static int TREE = 4;
+
+	
 int height;
 int width;
 int [][] board;
@@ -56,6 +64,17 @@ public void setDead(int x, int y) {
     this.board[x][y] = 0;
 }
 
+public void setState(int x, int y, int state) {
+    if (x < 0 || x >= width) {
+        return;
+    }
+
+    if (y < 0 || y >= height) {
+        return;
+    }
+
+    this.board[x][y] = state;
+}
 
 public int countAliveNeighbours(int x, int y) {
     int count = 0;
