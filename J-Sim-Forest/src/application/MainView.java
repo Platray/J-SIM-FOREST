@@ -13,21 +13,20 @@ import javafx.scene.transform.Affine;
 import javafx.scene.transform.NonInvertibleTransformException;
 
 public class MainView extends VBox {
-
+	
+	private InfoBar infobar;
 	private Canvas canvas;
-
 	private Affine affine;
 	public static final int EDITING = 0;
 	public static final int SIMULATING = 1;
-
 	private Simulation simulation;
 	private Simulation initialSimulation;
-
 	private int drawMode = Simulation.BABY;
 	private int applicationState = EDITING;
 	private Simulator simulator;
 
 	public MainView() {
+		
 		this.canvas = new Canvas(400, 400);
 		this.canvas.setOnMousePressed(this::handleDraw);
 		this.canvas.setOnMouseDragged(this::handleDraw);
@@ -37,16 +36,21 @@ public class MainView extends VBox {
 		Pane spacer = new Pane();
 		spacer.setMinSize(0, 0);
 		spacer.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		
+		this.infobar = new InfoBar();
+		this.infobar.setDrawMode(this.drawMode);
+		this.infobar.setCursorPosition(0, 0);
+		spacer.setStyle("-fx-background-color: #99ff7d;");
+		this.setStyle("-fx-background-color: #99ff7d;");
+
 		VBox.setVgrow(spacer, Priority.ALWAYS);
-
-		this.getChildren().addAll(toolbar, this.canvas, spacer);
-
+		this.getChildren().addAll(toolbar, this.canvas, spacer,infobar);
 		this.affine = new Affine();
-		this.affine.appendScale(400 / 10f, 400 / 10f);
-
-		this.initialSimulation = new Simulation(10, 10);
-
+		this.affine.appendScale(400 / 50f, 400 / 50f);
+		this.initialSimulation = new Simulation(100, 100);
+		
 		this.simulation = Simulation.copy(this.initialSimulation);
+		
 	}
 
 	private void handleDraw(MouseEvent event) {
@@ -91,10 +95,10 @@ public class MainView extends VBox {
 		g.setLineWidth(0.05);
 
 		for (int x = 0; x <= this.simulation.width; x++) {
-			g.strokeLine(x, 0, x, 10);
+			g.strokeLine(x, 0, x, 50);
 		}
 		for (int y = 0; y <= this.simulation.height; y++) {
-			g.strokeLine(0, y, 10, y);
+			g.strokeLine(0, y, 50, y);
 		}
 
 	}

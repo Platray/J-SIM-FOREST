@@ -9,24 +9,39 @@ public class Toolbar extends ToolBar {
 	private MainView mainView;
 
 	public Toolbar(MainView mainView) {
+		this.setStyle("-fx-background-color:rgb(8,78,4);");
 
 		this.mainView = mainView;
-		Button drawBABY = new Button("Add baby");
+		Button drawBABY = new Button("Pousse");
+		drawBABY.setStyle("-fx-background-color: #99ff7d;");
 		drawBABY.setOnAction(this::drawBaby);
-		Button drawBush = new Button("Add bush");
+		Button drawBush = new Button("Bush");
+		drawBush.setStyle("-fx-background-color: #57e630;");
+
 		drawBush.setOnAction(this::drawBush);
-		Button drawOldBush = new Button("Add Oldbush");
+		Button drawOldBush = new Button("Bush2");
 		drawOldBush.setOnAction(this::drawOldBush);
-		Button drawTree = new Button("Add Tree");
+		drawOldBush.setStyle("-fx-background-color: #57e630;");
+
+		Button drawTree = new Button("Arbre");
 		drawTree.setOnAction(this::drawTree);
-		Button erase = new Button("Empty ");
+		drawTree.setStyle("-fx-background-color: #187000");
+
+		Button erase = new Button("Eraser ");
 		erase.setOnAction(this::erase);
+		
 		Button step = new Button("Step");
 		step.setOnAction(this::handleStep);
+		step.setStyle("-fx-background-color: #ffd240");
+
 		Button stop = new Button("stop");
 		stop.setOnAction(this::handleStop);
+		stop.setStyle("-fx-background-color: #fc4503");
+
 		Button start = new Button("start");
 		start.setOnAction(this::handleStart);
+		start.setStyle("-fx-background-color: #c2fc03");
+
 		Button reset = new Button("reset");
 		reset.setOnAction(this::handleReset);
 		this.getItems().addAll(drawBABY, drawBush, drawOldBush, drawTree, erase, step, start, stop, reset);

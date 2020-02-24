@@ -15,7 +15,8 @@ public class InfoBar extends HBox{
 	public InfoBar() {
 		this.pointer = new Label();
 		this.editingTool =  new Label();
-		
+		this.setStyle("-fx-background-color:rgb(8,78,4);");
+
 		Pane spacer = new Pane();
 		spacer.setMinSize(0, 0);
 		spacer.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -27,16 +28,16 @@ public class InfoBar extends HBox{
 	public void setDrawMode(int drawMode) {
 		String modeString ;
 		
-	if (drawMode == Simulation.BABY) {
+	if (drawMode == 1) {
 		modeString = "Jeune pousse";
-	}else if(drawMode == Simulation.BUSH){
+	}else if(drawMode == 2){
 		modeString = "Buisson";
-	}else if(drawMode == Simulation.TREE){
+	}else if(drawMode == 4){
 		modeString = "Arbre";
 	}else {
 		modeString = "Efface";
 	}
-	this.editingTool.setText(String.format(drawModeFormat, modeString));
+	this.editingTool.setText( String.format(drawModeFormat, modeString));
 	}
 	
 	public void setCursorPosition(int x , int y ) {
