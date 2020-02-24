@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.NonInvertibleTransformException;
 
+
 public class MainView extends VBox {
 	
 	private InfoBar infobar;
@@ -24,13 +25,15 @@ public class MainView extends VBox {
 	private int drawMode = Simulation.BABY;
 	private int applicationState = EDITING;
 	private Simulator simulator;
+	private int duration;
+	private int gridSize;
 
-	public MainView() {
+	public MainView(int gridSize , int duration) {
 		
 		this.canvas = new Canvas(400, 400);
 		this.canvas.setOnMousePressed(this::handleDraw);
 		this.canvas.setOnMouseDragged(this::handleDraw);
-
+		this.duration = duration;
 		Toolbar toolbar = new Toolbar(this);
 
 		Pane spacer = new Pane();
@@ -46,11 +49,19 @@ public class MainView extends VBox {
 		VBox.setVgrow(spacer, Priority.ALWAYS);
 		this.getChildren().addAll(toolbar, this.canvas, spacer,infobar);
 		this.affine = new Affine();
-		this.affine.appendScale(400 / 50f, 400 / 50f);
+		this.affine.appendScale(400 / gridSize, 400 / gridSize);
 		this.initialSimulation = new Simulation(100, 100);
 		
 		this.simulation = Simulation.copy(this.initialSimulation);
 		
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
 	private void handleDraw(MouseEvent event) {
@@ -83,7 +94,6 @@ public class MainView extends VBox {
 	public void draw() {
 		GraphicsContext g = this.canvas.getGraphicsContext2D();
 		g.setTransform(this.affine);
-		g.setFill(Color.BLUE);
 		g.fillRect(0, 0, 450, 450);
 
 		if (this.applicationState == EDITING) {
@@ -91,14 +101,14 @@ public class MainView extends VBox {
 		} else {
 			drawSimulation(this.simulation);
 		}
-		g.setStroke(Color.GRAY);
+		g.setStroke(Color.BLACK);
 		g.setLineWidth(0.05);
 
 		for (int x = 0; x <= this.simulation.width; x++) {
-			g.strokeLine(x, 0, x, 50);
+			g.strokeLine(x, 0, x, gridSize);
 		}
 		for (int y = 0; y <= this.simulation.height; y++) {
-			g.strokeLine(0, y, 50, y);
+			g.strokeLine(0, y, gridSize, y);
 		}
 
 	}
@@ -153,5 +163,13 @@ public class MainView extends VBox {
 
 	public Simulator getSimulator() {
 		return simulator;
+	}
+
+	public int getGridSize() {
+		return gridSize;
+	}
+
+	public void setGridSize(int gridSize) {
+		this.gridSize = gridSize;
 	}
 }

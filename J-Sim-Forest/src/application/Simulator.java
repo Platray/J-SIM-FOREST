@@ -15,7 +15,7 @@ public class Simulator {
         this.mainView = mainView;
         this.simulation = simulation;
         this.timeline = new Timeline(new KeyFrame(Duration.millis(200), this::doStep));
-        this.timeline.setCycleCount(Timeline.INDEFINITE);
+        this.timeline.setCycleCount(mainView.getDuration());
     }
 
     private void doStep(ActionEvent actionEvent) {

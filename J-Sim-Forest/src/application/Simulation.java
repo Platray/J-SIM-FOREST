@@ -7,7 +7,6 @@ public class Simulation {
 	public static int BUSH = 2;
 	public static int BUSHOLD = 3;
 	public static int TREE = 4;
-
 	int height;
 	int width;
 	int[][] board;
