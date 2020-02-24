@@ -1,6 +1,7 @@
 package application;
 
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -29,20 +30,19 @@ public class MainView extends VBox {
 	private int gridSize;
 
 	public MainView(int gridSize , int duration) {
-		
+		this.setAlignment(Pos.CENTER);
 		this.canvas = new Canvas(400, 400);
 		this.canvas.setOnMousePressed(this::handleDraw);
 		this.canvas.setOnMouseDragged(this::handleDraw);
 		this.duration = duration;
+		this.gridSize = gridSize;
 		Toolbar toolbar = new Toolbar(this);
-
 		Pane spacer = new Pane();
 		spacer.setMinSize(0, 0);
 		spacer.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
-		this.infobar = new InfoBar();
-		this.infobar.setDrawMode(this.drawMode);
-		this.infobar.setCursorPosition(0, 0);
+		this.infobar = new InfoBar(this);
+		
 		spacer.setStyle("-fx-background-color: #99ff7d;");
 		this.setStyle("-fx-background-color: #99ff7d;");
 
